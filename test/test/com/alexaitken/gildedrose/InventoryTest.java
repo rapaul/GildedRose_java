@@ -30,6 +30,7 @@ public class InventoryTest {
 		
 		
 	}
+	
 	@Test
 	public void should_never_changes_sellIn_of_Sulfuras() throws Exception {
 		Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 0, 80);
@@ -39,11 +40,18 @@ public class InventoryTest {
 		sut.updateQuality();
 		
 		assertEquals(0, sulfuras.getSellIn());
-		
-		
 	}
 	
-	
+	@Test
+	public void should_never_change_quality_of_Sulfuras_even_when_sell_in_date_has_passed() throws Exception {
+		Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", -1, 80);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(sulfuras).toArray());
+		
+		sut.updateQuality();
+		
+		assertEquals(80, sulfuras.getQuality());
+	}
 	
 	@Test
 	public void should_lower_the_sellIn_by_one_for_normal_items() throws Exception {
@@ -92,7 +100,17 @@ public class InventoryTest {
 		
 		assertEquals(23, normalItem.getQuality());
 	}
-	
+
+	@Test
+	public void should_keep_quality_at_zero_when_sell_in_date_has_passed() throws Exception {
+		Item normalItem = new Item("+5 Dexterity Vest", -1, 0);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(normalItem).toArray());
+		
+		sut.updateQuality();
+		
+		assertEquals(0, normalItem.getQuality());
+	}
 	
 	@Test
 	public void should_increase_the_quality_of_aged_brie_as_it_gets_older() throws Exception {
@@ -106,6 +124,18 @@ public class InventoryTest {
 		assertEquals(26, agedBrie.getQuality());
 	}
 	
+	@Test
+	public void should_increase_the_quality_of_aged_brie_past_its_used_by_date() throws Exception {
+		Item agedBrie = new Item("Aged Brie", 0, 25);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(agedBrie).toArray());
+		
+		sut.updateQuality();
+		
+		
+		assertEquals(27, agedBrie.getQuality());
+	}
+	
 	
 	@Test
 	public void should_not_increase_the_quality_of_aged_brie_over_50() throws Exception {
@@ -115,6 +145,17 @@ public class InventoryTest {
 		
 		sut.updateQuality();
 		
+		
+		assertEquals(50, agedBrie.getQuality());
+	}
+	
+	@Test
+	public void should_not_increase_the_quality_of_aged_brie_over_50_even_when_the_sell_in_date_has_passed() throws Exception {
+		Item agedBrie = new Item("Aged Brie", 0, 50);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(agedBrie).toArray());
+		
+		sut.updateQuality();
 		
 		assertEquals(50, agedBrie.getQuality());
 	}
@@ -183,11 +224,5 @@ public class InventoryTest {
 		assertEquals(50, backStagePass10DaysAway.getQuality());
 		assertEquals(50, backStagePass5DaysAway.getQuality());
 	}
-	
-	
-	
-	
-	
-	
 	
 }
