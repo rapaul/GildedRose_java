@@ -31,14 +31,14 @@ public class Inventory {
 	}
 
 	private void updateQuality(Item item) {
-		if (!itemGetsBetterWithAge(item)) {
+		if (itemGetsBetterWithAge(item)) {
+			updateQualityOfItemsThatGetBetterWithAge(item);
+		} else {
 			if (item.getQuality() > 0) {
 				if (!item.getName().equals("Sulfuras, Hand of Ragnaros")) {
 					item.setQuality(item.getQuality() - 1);
 				}
 			}
-		} else {
-			updateQualityOfItemsThatGetBetterWithAge(item);
 		}
 	}
 
