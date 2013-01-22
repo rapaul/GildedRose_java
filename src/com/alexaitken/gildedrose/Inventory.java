@@ -25,7 +25,8 @@ public class Inventory {
 
 	public void updateQuality() {
 		for (Item item : items) {
-			ruleFactory.getRule(item).apply();
+			Rule rule = ruleFactory.getRule(item);
+			rule.applyTo(item);
 		}
 	}
 

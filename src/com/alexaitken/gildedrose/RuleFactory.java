@@ -3,19 +3,13 @@ package com.alexaitken.gildedrose;
 public class RuleFactory {
 
 	public Rule getRule(Item item) {
-		return new DoEverythingRule(item);
+		return new DoEverythingRule();
 	}
 
 	class DoEverythingRule implements Rule {
 
-		private Item item;
-
-		public DoEverythingRule(Item item) {
-			this.item = item;
-		}
-
 		@Override
-		public void apply() {
+		public void applyTo(Item item) {
 			updateQuality(item);
 			updateSellIn(item);
 			updateQualityForExpiredItems(item);

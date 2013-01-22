@@ -2,6 +2,6 @@ package com.alexaitken.gildedrose;
 
 public interface Rule {
 
-	void apply();
+	void applyTo(Item item);
 
 }
