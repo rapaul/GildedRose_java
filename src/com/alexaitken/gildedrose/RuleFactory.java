@@ -1,9 +1,22 @@
 package com.alexaitken.gildedrose;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RuleFactory {
 
+	private Map<String, Rule> nameToRuleMapping = new HashMap<>();
+
+	public RuleFactory() {
+		nameToRuleMapping.put("Sulfuras, Hand of Ragnaros", new FrozenRule());
+	}
+
 	public Rule getRule(Item item) {
-		return new DoEverythingRule();
+		Rule rule = nameToRuleMapping.get(item.getName());
+		if (rule == null) {
+			rule = new DoEverythingRule();
+		}
+		return rule;
 	}
 
 	class DoEverythingRule implements Rule {
@@ -20,9 +33,7 @@ public class RuleFactory {
 				updateQualityOfItemsThatGetBetterWithAge(item);
 			} else {
 				if (item.getQuality() > 0) {
-					if (!item.getName().equals("Sulfuras, Hand of Ragnaros")) {
-						item.setQuality(item.getQuality() - 1);
-					}
+					item.setQuality(item.getQuality() - 1);
 				}
 			}
 		}
@@ -53,9 +64,7 @@ public class RuleFactory {
 		}
 
 		private void updateSellIn(Item item) {
-			if (!item.getName().equals("Sulfuras, Hand of Ragnaros")) {
-				item.setSellIn(item.getSellIn() - 1);
-			}
+			item.setSellIn(item.getSellIn() - 1);
 		}
 
 		private void updateQualityForExpiredItems(Item item) {
@@ -63,9 +72,7 @@ public class RuleFactory {
 				if (!item.getName().equals("Aged Brie")) {
 					if (!item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
 						if (item.getQuality() > 0) {
-							if (!item.getName().equals("Sulfuras, Hand of Ragnaros")) {
-								item.setQuality(item.getQuality() - 1);
-							}
+							item.setQuality(item.getQuality() - 1);
 						}
 					} else {
 						item.setQuality(item.getQuality()
