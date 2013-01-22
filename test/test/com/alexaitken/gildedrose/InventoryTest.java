@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.alexaitken.gildedrose.Inventory;
 import com.alexaitken.gildedrose.Item;
+import com.alexaitken.gildedrose.RuleFactory;
 
 
 public class InventoryTest {
@@ -136,7 +137,7 @@ public class InventoryTest {
 	}
 
 	private void updateQualityFor(Item... items) {
-		Inventory inventory = new Inventory(items);
+		Inventory inventory = new Inventory(items, new RuleFactory());
 		inventory.updateQuality();
 	}
 	
