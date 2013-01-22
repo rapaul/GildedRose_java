@@ -16,9 +16,15 @@ public class RuleFactoryTest {
 	}
 
 	@Test
-	public void chooseFrozenRuleForSulfuras() {
+	public void choosesFrozenRuleForSulfuras() {
 		Rule rule = new RuleFactory().getRule(new Item("Sulfuras, Hand of Ragnaros", 5, 80));
 		assertThat(rule, instanceOf(FrozenRule.class));
+	}
+
+	@Test
+	public void choosesAppreciatingQualityRuleForAgedBrie() throws Exception {
+		Rule rule = new RuleFactory().getRule(new Item("Aged Brie", 1, 2));
+		assertThat(rule, instanceOf(AppreciatingQualityRule.class));
 	}
 
 }

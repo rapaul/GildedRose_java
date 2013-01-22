@@ -9,6 +9,7 @@ public class RuleFactory {
 
 	public RuleFactory() {
 		nameToRuleMapping.put("Sulfuras, Hand of Ragnaros", new FrozenRule());
+		nameToRuleMapping.put("Aged Brie", new AppreciatingQualityRule());
 	}
 
 	public Rule getRule(Item item) {
